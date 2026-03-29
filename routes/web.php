@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +23,14 @@ Route::get('/about', function () {
 
 Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');
 Route::get('/gallery/{slug}', [MainController::class, 'gallery'])->name('gallery');
+Route::get('/signin', [AuthController::class, 'create'])->name('signin.create');
+Route::post('/signin', [AuthController::class, 'registration'])->name('signin.store');
+// посмотреть всех юзеров
+Route::get('/users', function () {
+    $jsonPath = storage_path('app/users.json');
+    if (file_exists($jsonPath)) {
+        $content = file_get_contents($jsonPath);
+        return '<pre>' . $content . '</pre>';
+    }
+    return 'Нет зарегистрированных пользователей';
+});
