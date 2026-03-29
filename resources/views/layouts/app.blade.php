@@ -5,34 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Мой сайт')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        main {
-            flex: 1;
-        }
-        .navbar {
-            margin-bottom: 20px;
-        }
-        footer {
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            margin-top: 40px;
-            text-align: center;
-        }
-        .card-img-top {
-            transition: transform 0.3s ease;
-        }
-        .card-img-top:hover {
-            transform: scale(1.05);
-        }
-        a {
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -64,6 +38,11 @@
                             <a class="nav-link {{ request()->routeIs('signin.create') ? 'active' : '' }}" 
                             href="{{ route('signin.create') }}">Регистрация</a>
                         </li>
+                      
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.articles.index') }}">Админка</a>
+                            </li>
+                       
                     </ul>
                 </div>
             </div>
@@ -96,7 +75,8 @@
             <p>© 2026 - Савицкая Полина Артёмовна, группа 243-323</p>
         </div>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="/js/main.js"></script>
 </body>
 </html>

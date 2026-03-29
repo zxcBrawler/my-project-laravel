@@ -99,26 +99,4 @@
         </div>
     </div>
 </div>
-<style>
-    .hover-shadow:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-    }
-    .contact-item {
-        transition: all 0.3s ease;
-    }
-    .contact-item:hover {
-        background-color: #f8f9fa;
-        padding-left: 10px;
-    }
-    .social-card {
-        transition: all 0.3s ease;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-    }
-    .social-card:hover {
-        background-color: #e9ecef;
-    }
-</style>
 @endsection

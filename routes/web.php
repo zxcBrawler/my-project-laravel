@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ArticleAdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,9 @@ Route::prefix('articles')->name('articles.')->group(function () {
     Route::get('/{slug}', [ArticleController::class, 'show'])->name('show');
 });
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('articles', ArticleAdminController::class);
+});
 // посмотреть всех юзеров
 Route::get('/users', function () {
     $jsonPath = storage_path('app/users.json');

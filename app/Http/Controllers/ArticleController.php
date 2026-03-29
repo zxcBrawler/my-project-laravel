@@ -11,7 +11,7 @@ class ArticleController extends Controller
     {
         $articles = Article::published()
             ->recent()
-            ->get();
+            ->paginate(12);
         
         return view('articles.index', compact('articles'));
     }
@@ -39,7 +39,7 @@ class ArticleController extends Controller
         $articles = Article::byCategory($category)
             ->published()
             ->recent()
-            ->get();
+            ->paginate(12);
         
         $currentCategory = $category;
         

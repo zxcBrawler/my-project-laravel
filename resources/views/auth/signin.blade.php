@@ -85,47 +85,4 @@
         </div>
     </div>
 </div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function togglePasswordVisibility(inputId, toggleId) {
-            const input = document.getElementById(inputId);
-            const toggle = document.getElementById(toggleId);
-            
-            if (input && toggle) {
-                toggle.addEventListener('click', function() {
-                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                    input.setAttribute('type', type);
-                    
-                    this.classList.toggle('bi-eye');
-                    this.classList.toggle('bi-eye-slash');
-                });
-            }
-        }
-        
-        togglePasswordVisibility('password', 'togglePassword');
-        togglePasswordVisibility('password_confirmation', 'toggleConfirmPassword');
-    });
-</script>
-
-<style>
-    .password-toggle {
-        opacity: 0.6;
-        transition: opacity 0.3s ease;
-    }
-    
-    .password-toggle:hover {
-        opacity: 1;
-    }
-    
-    .position-relative .form-control {
-        padding-right: 35px;
-    }
-    
-    .form-control.is-invalid ~ .password-toggle {
-        right: 35px;
-    }
-</style>
 @endsection

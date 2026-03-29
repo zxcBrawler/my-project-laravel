@@ -5,7 +5,6 @@
 @section('content')
 <div class="container">
     <h1 class="text-center mb-5">Все новости</h1>
-    
     @if($articles->count() > 0)
         <div class="row">
             @foreach($articles as $article)
@@ -49,6 +48,9 @@
                 </div>
             @endforeach
         </div> 
+        <div class="text-center mt-4">
+            {{ $articles->links() }}
+        </div>
     @else
         <div class="alert alert-info text-center">
             Новостей пока нет
