@@ -4,5 +4,5 @@
 
 @section('content')
 <div class="container">
-    <h1 class="text-center mb-5">Новости</h1>
+    <h1 class="text-center mb-5">Главная страница</h1>
 @endsection

@@ -33,6 +33,9 @@
                 </div>
             @endforeach
         </div>
+        <div class="text-center mt-4">
+            {{ $articles->links() }}
+        </div>
     @else
         <div class="alert alert-info text-center">
             В этой категории пока нет новостей

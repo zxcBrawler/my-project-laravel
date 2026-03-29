@@ -19,30 +19,43 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" 
-                            href="{{ route('home') }}">Главная</a>
+                            <a class="nav-link" href="{{ route('home') }}">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('articles.*') ? 'active' : '' }}" 
-                            href="{{ route('articles.index') }}">Новости</a>
+                            <a class="nav-link" href="{{ route('articles.index') }}">Новости</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" 
-                            href="{{ route('about') }}">О нас</a>
+                            <a class="nav-link" href="{{ route('about') }}">О нас</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('contacts') ? 'active' : '' }}" 
-                            href="{{ route('contacts') }}">Контакты</a>
+                            <a class="nav-link" href="{{ route('contacts') }}">Контакты</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('signin.create') ? 'active' : '' }}" 
-                            href="{{ route('signin.create') }}">Регистрация</a>
-                        </li>
-                      
+                        
+                        @auth
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.articles.index') }}">Админка</a>
                             </li>
-                       
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    {{ Auth::user()->name }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Выйти</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">Вход</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>

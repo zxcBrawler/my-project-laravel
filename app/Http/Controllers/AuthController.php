@@ -2,44 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\File;
 
 class AuthController extends Controller
 {
-    public function create()
+    public function showRegisterForm()
     {
-        return view('auth.signin');
+        return view('auth.register');
     }
     
-    public function registration(Request $request)
+    public function showLoginForm()
     {
-        $jsonPath = storage_path('app/users.json');
-        $users = [];
-        
-        if (File::exists($jsonPath)) {
-            $jsonContent = File::get($jsonPath);
-            $users = json_decode($jsonContent, true);
-            
-            foreach ($users as $user) {
-                if ($user['email'] === $request->input('email')) {
-                    return redirect()->back()
-                        ->withErrors(['email' => 'Пользователь с таким email уже зарегистрирован'])
-                        ->withInput();
-                }
-            }
-        }
-        
+        return view('auth.login');
+    }
+    
+    public function register(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:255',
-            'email' => 'required|email',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ], [
             'name.required' => 'Поле имя обязательно для заполнения',
             'name.min' => 'Имя должно содержать минимум 2 символа',
             'email.required' => 'Поле email обязательно для заполнения',
             'email.email' => 'Введите корректный email адрес',
+            'email.unique' => 'Пользователь с таким email уже зарегистрирован',
             'password.required' => 'Поле пароль обязательно для заполнения',
             'password.min' => 'Пароль должен содержать минимум 6 символов',
             'password.confirmed' => 'Пароли не совпадают',
@@ -51,26 +43,60 @@ class AuthController extends Controller
                 ->withInput();
         }
         
-        $nextId = 1;
-        if (!empty($users)) {
-            $lastUser = end($users);
-            $nextId = $lastUser['id'] + 1;
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        
+        return redirect()->route('login')
+            ->with('success', 'Регистрация прошла успешно! Теперь вы можете войти в систему.');
+    }
+    
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ], [
+            'email.required' => 'Поле email обязательно для заполнения',
+            'email.email' => 'Введите корректный email адрес',
+            'password.required' => 'Поле пароль обязательно для заполнения',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $credentials = $request->only('email', 'password');
+        $remember = $request->has('remember');
+        
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+            session(['auth_token' => $token]);
+            return redirect()->intended(route('home'))
+                ->with('success', 'Добро пожаловать, ' . $user->name . '!');
         }
         
-        $newUser = [
-            'id' => $nextId,
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'created_at' => now()->toDateTimeString(),
-            'updated_at' => now()->toDateTimeString()
-        ];
+        return redirect()->back()
+            ->withErrors(['email' => 'Неверный email или пароль'])
+            ->withInput($request->only('email', 'remember'));
+    }
+    
+    public function logout(Request $request)
+    {
+        if (Auth::check()) {
+            $request->user()->tokens()->delete();
+        }
         
-        $users[] = $newUser;
-        
-        File::put($jsonPath, json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        
-        return redirect()->route('signin.create')
-            ->with('success', 'Регистрация прошла успешно!');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        $request->session()->forget('auth_token');
+        return redirect()->route('home')
+            ->with('success', 'Вы успешно вышли из системы');
     }
 }

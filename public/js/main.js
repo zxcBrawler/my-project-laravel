@@ -1,35 +1,33 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const togglePassword = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
+(function () {
+    const toggleBtn = document.getElementById('togglePassword');
+    const passInput = document.getElementById('password');
 
-    if (togglePassword && password) {
-        togglePassword.onclick = function () {
-            if (password.type === 'password') {
-                password.type = 'text';
-                this.classList.remove('bi-eye-slash');
-                this.classList.add('bi-eye');
+    if (toggleBtn && passInput) {
+        toggleBtn.onclick = function (e) {
+            e.preventDefault();
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                this.innerHTML = '<i class="bi bi-eye"></i>';
             } else {
-                password.type = 'password';
-                this.classList.remove('bi-eye');
-                this.classList.add('bi-eye-slash');
+                passInput.type = 'password';
+                this.innerHTML = '<i class="bi bi-eye-slash"></i>';
             }
         };
     }
 
-    const toggleConfirm = document.getElementById('toggleConfirmPassword');
-    const confirmPassword = document.getElementById('password_confirmation');
+    const toggleConfirmBtn = document.getElementById('toggleConfirmPassword');
+    const confirmInput = document.getElementById('password_confirmation');
 
-    if (toggleConfirm && confirmPassword) {
-        toggleConfirm.onclick = function () {
-            if (confirmPassword.type === 'password') {
-                confirmPassword.type = 'text';
-                this.classList.remove('bi-eye-slash');
-                this.classList.add('bi-eye');
+    if (toggleConfirmBtn && confirmInput) {
+        toggleConfirmBtn.onclick = function (e) {
+            e.preventDefault();
+            if (confirmInput.type === 'password') {
+                confirmInput.type = 'text';
+                this.innerHTML = '<i class="bi bi-eye"></i>';
             } else {
-                confirmPassword.type = 'password';
-                this.classList.remove('bi-eye');
-                this.classList.add('bi-eye-slash');
+                confirmInput.type = 'password';
+                this.innerHTML = '<i class="bi bi-eye-slash"></i>';
             }
         };
     }
-});
+})();

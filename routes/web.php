@@ -18,30 +18,26 @@ use App\Http\Controllers\ArticleAdminController;
 */
 
 Route::get('/', [MainController::class, 'index'])->name('home');
-
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-
+Route::get('/about', function () { return view('about'); })->name('about');
 Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');
-Route::get('/gallery/{slug}', [MainController::class, 'gallery'])->name('gallery');
-Route::get('/signin', [AuthController::class, 'create'])->name('signin.create');
-Route::post('/signin', [AuthController::class, 'registration'])->name('signin.store');
+
 Route::prefix('articles')->name('articles.')->group(function () {
     Route::get('/', [ArticleController::class, 'index'])->name('index');
     Route::get('/category/{category}', [ArticleController::class, 'category'])->name('category');
     Route::get('/{slug}', [ArticleController::class, 'show'])->name('show');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('articles', ArticleAdminController::class);
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
 });
-// посмотреть всех юзеров
-Route::get('/users', function () {
-    $jsonPath = storage_path('app/users.json');
-    if (file_exists($jsonPath)) {
-        $content = file_get_contents($jsonPath);
-        return '<pre>' . $content . '</pre>';
-    }
-    return 'Нет зарегистрированных пользователей';
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('articles', ArticleAdminController::class);
+    });
 });
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
