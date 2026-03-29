@@ -23,13 +23,22 @@
             margin-top: 40px;
             text-align: center;
         }
+        .card-img-top {
+            transition: transform 0.3s ease;
+        }
+        .card-img-top:hover {
+            transform: scale(1.05);
+        }
+        a {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('home') }}">Мой сайт</a>
+                <a class="navbar-brand" href="{{ route('home') }}">Новостной сайт</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -53,7 +62,7 @@
         </nav>
     </header>
 
-    <main class="container">
+    <main>
         @yield('content')
     </main>
 
