@@ -29,7 +29,7 @@ class ArticleCreateRequest extends FormRequest
             'preview_image' => 'nullable|string|max:255',
             'full_image' => 'nullable|string|max:255',
             'published_date' => 'nullable|date',
-            'is_published' => 'boolean'
+            'is_published' => 'boolean',
         ];
     }
     

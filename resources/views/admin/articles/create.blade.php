@@ -3,6 +3,15 @@
 @section('title', 'Создать новость')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -115,6 +124,7 @@
                                    class="form-check-input" 
                                    id="is_published" 
                                    name="is_published"
+                                   value="1"
                                    {{ old('is_published') ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_published">
                                 Опубликовать сразу

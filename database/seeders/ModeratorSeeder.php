@@ -21,5 +21,17 @@ class ModeratorSeeder extends Seeder
             'password' => Hash::make('password123'),
             'role_id' => 1,
         ]);
+        User::create([
+            'name' => 'ModerTest2',
+            'email' => 'postscriptum145@gmail.com',
+            'password' => Hash::make('password123'),
+            'role_id' => 1,
+        ]);
+        User::create([
+            'name' => 'ModerTest3',
+            'email' => 'polinasav04@gmail.com',
+            'password' => Hash::make('password123'),
+            'role_id' => 1,
+        ]);
     }
 }

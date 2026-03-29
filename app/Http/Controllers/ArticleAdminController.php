@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Http\Requests\ArticleStoreRequest;
+use App\Http\Requests\ArticleCreateRequest;
 use App\Http\Requests\ArticleUpdateRequest;
+use App\Mail\NewArticleMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Jobs\SendNewArticleNotificationJob;
 
 class ArticleAdminController extends Controller
 {
@@ -15,7 +18,7 @@ class ArticleAdminController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-        public function index(Request $request)
+    public function index(Request $request)
     {
         Gate::authorize('access-admin');
         
@@ -48,7 +51,7 @@ class ArticleAdminController extends Controller
         return view('admin.articles.create');
     }
 
-    public function store(ArticleStoreRequest $request)
+    public function store(ArticleCreateRequest $request)
     {
         Gate::authorize('access-admin');
         
@@ -60,8 +63,10 @@ class ArticleAdminController extends Controller
         
         $validated['is_published'] = $request->has('is_published');
         
-        Article::create($validated);
+        $article = Article::create($validated);
         
+        $this->sendNewArticleNotification($article);
+
         return redirect()->route('admin.articles.index')
             ->with('success', 'Новость успешно создана!');
     }
@@ -97,5 +102,20 @@ class ArticleAdminController extends Controller
         
         return redirect()->route('admin.articles.index')
             ->with('success', 'Новость успешно удалена!');
+    }
+
+    private function sendNewArticleNotification($article)
+    {
+        $moderators = User::whereHas('role', function ($query) {
+            $query->where('slug', 'moderator');
+        })->get();
+
+        if ($moderators->isNotEmpty()) {
+            foreach ($moderators as $moderator) {
+                SendNewArticleNotificationJob::dispatch($article, $moderator->email);
+            }
+        } else {
+            SendNewArticleNotificationJob::dispatch($article, config('mail.from.address'));
+        }
     }
 }
