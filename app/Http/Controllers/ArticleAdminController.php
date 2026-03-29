@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Article;
-use App\Http\Requests\ArticleCreateRequest;
+use App\Http\Requests\ArticleStoreRequest;
 use App\Http\Requests\ArticleUpdateRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleAdminController extends Controller
 {
-    public function index(Request $request)
+    public function __construct()
     {
+        $this->middleware('auth:sanctum');
+    }
+
+        public function index(Request $request)
+    {
+        Gate::authorize('access-admin');
+        
+        $search = $request->get('search', '');
         $sortField = $request->get('sort', 'created_at');
         $sortDirection = $request->get('direction', 'desc');
-        $search = $request->get('search', '');
         
         $allowedSortFields = ['id', 'title', 'category', 'views', 'is_published', 'created_at', 'published_date'];
         
@@ -21,24 +29,29 @@ class ArticleAdminController extends Controller
             $sortField = 'created_at';
         }
         
-        $articles = Article::when($search, function ($query, $search) {
+        $articles = Article::query()
+            ->when($search, function ($query, $search) {
                 return $query->where('title', 'like', "%{$search}%")
-                            ->orWhere('short_description', 'like', "%{$search}%")
-                            ->orWhere('category', 'like', "%{$search}%");
+                             ->orWhere('short_description', 'like', "%{$search}%")
+                             ->orWhere('category', 'like', "%{$search}%");
             })
             ->orderBy($sortField, $sortDirection)
             ->paginate(15)
-            ->appends(['sort' => $sortField, 'direction' => $sortDirection, 'search' => $search]);
+            ->appends(['search' => $search, 'sort' => $sortField, 'direction' => $sortDirection]);
         
         return view('admin.articles.index', compact('articles', 'sortField', 'sortDirection', 'search'));
     }
 
     public function create()
     {
+        Gate::authorize('access-admin');
         return view('admin.articles.create');
     }
-    public function store(ArticleCreateRequest $request)
+
+    public function store(ArticleStoreRequest $request)
     {
+        Gate::authorize('access-admin');
+        
         $validated = $request->validated();
         
         if (!isset($validated['published_date'])) {
@@ -60,16 +73,16 @@ class ArticleAdminController extends Controller
 
     public function edit(Article $article)
     {
+        Gate::authorize('access-admin');
         return view('admin.articles.edit', compact('article'));
     }
 
     public function update(ArticleUpdateRequest $request, Article $article)
     {
+        Gate::authorize('access-admin');
         
         $validated = $request->validated();
-        
-        $validated['is_published'] = $request->has('is_published') ? 1 : 0;
-        
+        $validated['is_published'] = $request->has('is_published');
         $article->update($validated);
         
         return redirect()->route('admin.articles.index')
@@ -78,6 +91,8 @@ class ArticleAdminController extends Controller
 
     public function destroy(Article $article)
     {
+        Gate::authorize('access-admin');
+        
         $article->delete();
         
         return redirect()->route('admin.articles.index')

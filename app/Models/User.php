@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -42,4 +43,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+        public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isModerator()
+    {
+        if (!$this->role) {
+            return false;
+        }
+        
+        return $this->role->slug === 'moderator';
+    }
+
+    public function isReader()
+    {
+        if (!$this->role) {
+            return false;
+        }
+        return $this->role->slug === 'reader';
+    }
+
+    public function hasPermission($permission)
+    {
+        if ($this->isModerator()) {
+            return true;
+        }
+        return false;
+    }
 }

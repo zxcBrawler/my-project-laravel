@@ -3,15 +3,15 @@
 @section('title', 'Управление новостями')
 
 @section('content')
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Управление новостями</h1>
-        <a href="{{ route('admin.articles.create') }}" class="btn btn-primary">
-            + Создать новость
-        </a>
+        @can('create', App\Models\Article::class)
+            <a href="{{ route('admin.articles.create') }}" class="btn btn-primary">
+                + Создать новость
+            </a>
+        @endcan
     </div>
-    
-   
     <div class="card mb-4">
         <div class="card-body">
             <form method="GET" action="{{ route('admin.articles.index') }}" class="row g-3">
