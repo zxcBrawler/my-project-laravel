@@ -46,15 +46,19 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" 
-                               href="{{ route('home') }}">Главная</a>
+                            href="{{ route('home') }}">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('articles.*') ? 'active' : '' }}" 
+                            href="{{ route('articles.index') }}">Новости</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" 
-                               href="{{ route('about') }}">О нас</a>
+                            href="{{ route('about') }}">О нас</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('contacts') ? 'active' : '' }}" 
-                               href="{{ route('contacts') }}">Контакты</a>
+                            href="{{ route('contacts') }}">Контакты</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('signin.create') ? 'active' : '' }}" 

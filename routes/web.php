@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,12 @@ Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');
 Route::get('/gallery/{slug}', [MainController::class, 'gallery'])->name('gallery');
 Route::get('/signin', [AuthController::class, 'create'])->name('signin.create');
 Route::post('/signin', [AuthController::class, 'registration'])->name('signin.store');
+Route::prefix('articles')->name('articles.')->group(function () {
+    Route::get('/', [ArticleController::class, 'index'])->name('index');
+    Route::get('/category/{category}', [ArticleController::class, 'category'])->name('category');
+    Route::get('/{slug}', [ArticleController::class, 'show'])->name('show');
+});
+
 // посмотреть всех юзеров
 Route::get('/users', function () {
     $jsonPath = storage_path('app/users.json');
