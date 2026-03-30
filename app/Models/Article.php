@@ -64,4 +64,13 @@ class Article extends Model
     {
         return $query->where('category', $category);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->where('is_approved', true);
+    }
+
+    public function allComments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

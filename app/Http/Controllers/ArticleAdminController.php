@@ -73,7 +73,14 @@ class ArticleAdminController extends Controller
 
     public function show(Article $article)
     {
-        return view('admin.articles.show', compact('article'));
+        Gate::authorize('access-admin');
+        
+        $comments = $article->allComments()
+            ->with(['user', 'moderator'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+        
+        return view('admin.articles.show', compact('article', 'comments'));
     }
 
     public function edit(Article $article)

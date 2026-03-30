@@ -9,7 +9,7 @@
         <div class="row">
             @foreach($articles as $article)
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card h-100 shadow-sm d-flex flex-column">
                         @if($article->preview_image)
                             <a href="{{ route('articles.show', $article->slug) }}">
                                 <img src="{{ asset($article->preview_image) }}" 
@@ -18,14 +18,14 @@
                                      style="height: 200px; object-fit: cover;">
                             </a>
                         @endif
-                        <div class="card-body">
+                        <div class="card-body flex-grow-1">
                             <h5 class="card-title">
                                 <a href="{{ route('articles.show', $article->slug) }}" 
                                    class="text-decoration-none text-dark">
                                     {{ $article->title }}
                                 </a>
                             </h5>
-                            <p class="card-text">{{ Str::limit($article->short_description, 100) }}</p>
+                            <p class="card-text">{{ Str::limit($article->short_description, 100) }}</p>                           
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <small class="text-muted">
@@ -44,10 +44,18 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="card-footer bg-white border-top-0 pt-0 pb-3">
+                            <a href="{{ route('articles.show', $article->slug) }}#comments" 
+                               class="text-decoration-none text-muted comment-count">
+                                <i class="bi bi-chat-dots"></i> 
+                                Комментарии: {{ $article->comments_count ?? $article->comments()->count() }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             @endforeach
-        </div> 
+        </div>
+        
         <div class="text-center mt-4">
             {{ $articles->links() }}
         </div>

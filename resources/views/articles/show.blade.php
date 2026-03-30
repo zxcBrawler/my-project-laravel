@@ -58,7 +58,49 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="mt-5">
+                <h3>Комментарии ({{ $article->comments->count() }})</h3>
+                @auth
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Оставить комментарий</h5>
+                            <form action="{{ route('comments.store', $article) }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <textarea name="content" class="form-control" rows="3" 
+                                            placeholder="Ваш комментарий..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </form>
+                            @if(session('success'))
+                                <div class="alert alert-success mt-3">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @else
+                    <div class="alert alert-info">
+                        <a href="{{ route('login') }}">Войдите</a>, чтобы оставить комментарий
+                    </div>
+                @endauth
+                
+                <div class="comments-list">
+                    @forelse($article->comments as $comment)
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <strong>{{ $comment->user->name }}</strong>
+                                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                </div>
+                                <p class="mt-2">{{ $comment->content }}</p>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-muted">Пока нет комментариев. Будьте первым!</p>
+                    @endforelse
+                </div>
+            </div>
             @if($relatedArticles->count() > 0)
                 <div class="mt-5">
                     <h3 class="mb-4">Похожие новости</h3>

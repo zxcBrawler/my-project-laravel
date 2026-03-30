@@ -6,6 +6,8 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleAdminController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CommentAdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +40,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('articles', ArticleAdminController::class);
     });
+});
+
+Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
+
+Route::middleware(['auth:sanctum'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/comments', [CommentAdminController::class, 'index'])->name('comments.index');
+    Route::patch('/comments/{comment}/approve', [CommentAdminController::class, 'approve'])->name('comments.approve');
+    Route::delete('/comments/{comment}/reject', [CommentAdminController::class, 'reject'])->name('comments.reject');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

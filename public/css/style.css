@@ -100,3 +100,57 @@ th a:hover {
 .form-control.is-invalid~.password-toggle {
     right: 35px;
 }
+
+.comments-list .card {
+    transition: all 0.3s ease;
+}
+
+.comments-list .card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.border-success {
+    border-left: 4px solid #198754 !important;
+}
+
+.border-danger {
+    border-left: 4px solid #dc3545 !important;
+}
+
+.border-warning {
+    border-left: 4px solid #ffc107 !important;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    flex: 1 1 auto;
+}
+
+.card-footer {
+    margin-top: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.comment-count {
+    display: inline-block;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.comment-count:hover {
+    color: #0d6efd !important;
+    transform: translateX(5px);
+}
+
+.comment-count i {
+    margin-right: 5px;
+}

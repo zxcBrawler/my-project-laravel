@@ -30,46 +30,55 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('contacts') }}">Контакты</a>
                         </li>
-                        
                         @auth
                             @can('access-admin')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.articles.index') }}">Админка</a>
-                                </li>
-                            @endcan
-                            
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                    {{ Auth::user()->name }}
-                                    @if(Auth::user()->isModerator())
-                                        <span class="badge bg-warning text-dark">Модератор</span>
-                                    @else
-                                        <span class="badge bg-secondary">Читатель</span>
-                                    @endif
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <button type="submit" class="dropdown-item">Выйти</button>
-                                        </form>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                        Администрирование
+                                    </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('admin.articles.index') }}">
+                                                    Управление статьями
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('admin.comments.index') }}">
+                                                    Модерация комментариев
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
-                                </ul>
-                            </li>
-                        @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Вход</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
-                            </li>
+                            @endcan
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                        {{ Auth::user()->name }}
+                                        @if(Auth::user()->isModerator())
+                                            <span class="badge bg-warning text-dark">Модератор</span>
+                                        @endif
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item">Выйти</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">Вход</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
+                                </li>
                         @endauth
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-
     <main>
         @if(session('success'))
         <div class="container mt-3">
