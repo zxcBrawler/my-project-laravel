@@ -11,7 +11,6 @@
                     Назад к новостям
                 </a>
             </div>
-            
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h3 class="mb-0">{{ $article['name'] }}</h3>
@@ -25,20 +24,17 @@
                                  style="max-height: 500px; width: auto;">
                         </div>
                     @endif
-                    
                     @if(isset($article['date']))
                         <div class="text-muted mb-3">
                             <small>Дата публикации: {{ $article['date'] }}</small>
                         </div>
                     @endif
-                    
                     @if(isset($article['shortDesc']))
                         <div class="mb-4">
                             <h4>Краткое описание</h4>
                             <p>{{ $article['shortDesc'] }}</p>
                         </div>
                     @endif
-                    
                     @if(isset($article['desc']))
                         <div class="mb-4">
                             <h4>Полный текст</h4>

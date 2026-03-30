@@ -5,7 +5,6 @@
 @section('content')
 <div class="container">
     <h1 class="text-center mb-5">Новости категории: {{ $currentCategory }}</h1>
-    
     @if($articles->count() > 0)
         <div class="row">
             @foreach($articles as $article)

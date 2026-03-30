@@ -10,7 +10,6 @@
             <p class="lead">Сайт, который я сделал, потому что это было в задании</p>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card mb-4">
@@ -32,7 +31,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="card mb-4">
                 <div class="card-body">
                     <h3>Моя миссия</h3>
@@ -45,7 +43,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="card mb-4">
                 <div class="card-body">
                     <h3>Мои принципы</h3>
@@ -65,7 +62,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="card mb-4">
                 <div class="card-body">
                     <h3>Моя команда</h3>
@@ -83,7 +79,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="card">
                 <div class="card-body">
                     <h3>Мои достижения</h3>
@@ -103,7 +98,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="alert alert-warning mt-4">
                 Внимание: данный сайт создан в учебных целях одним человеком и его котом. 
                 Не воспринимайте всерьез то, что здесь написано. Я тоже не воспринимаю.

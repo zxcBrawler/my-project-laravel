@@ -33,7 +33,6 @@
                                                 <strong>{!! $contact['value'] !!}</strong>
                                             </p>
                                         @endif
-                                        
                                         @if(isset($contact['description']))
                                             <small class="text-muted">{{ $contact['description'] }}</small>
                                         @endif
@@ -49,7 +48,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="col-md-6">
             @if(isset($social) && count($social) > 0)
                 <div class="card shadow-sm mb-4">
@@ -72,7 +70,6 @@
                     </div>
                 </div>
             @endif
-            
             <div class="card shadow-sm">
                 <div class="card-header bg-info text-white">
                     <h3 class="mb-0">Написать нам</h3>

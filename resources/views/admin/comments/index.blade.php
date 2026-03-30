@@ -10,7 +10,6 @@
             Назад к статьям
         </a>
     </div>
-    
     @if($comments->count() > 0)
         <div class="row">
             @foreach($comments as $comment)

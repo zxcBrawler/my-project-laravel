@@ -38,7 +38,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        
                         <div class="mb-3">
                             <label for="password" class="form-label">Пароль</label>
                             <div class="input-group">
@@ -56,7 +55,6 @@
                             </div>
                             <small class="text-muted">Минимум 6 символов</small>
                         </div>
-                        
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Подтверждение пароля</label>
                             <div class="input-group">
@@ -70,9 +68,7 @@
                                 </button>
                             </div>
                         </div>
-                        
                         <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
-                        
                         <div class="mt-3 text-center">
                             <small>
                                 Уже есть аккаунт? <a href="{{ route('login') }}">Войти</a>

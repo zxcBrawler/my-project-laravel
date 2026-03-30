@@ -177,8 +177,6 @@
                 </tbody>
             </table>
         </div>
-        
-        
         <div class="text-center mt-4">
             {{ $articles->links() }}
         </div>

@@ -88,7 +88,6 @@
             </div>
         </div>
         @endif
-    
         @if(session('error'))
             <div class="container mt-3">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -99,14 +98,12 @@
         @endif
         @yield('content')
     </main>
-
     <footer>
         <div class="container">
             <p>© 2026 - Савицкая Полина Артёмовна, группа 243-323</p>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="/js/main.js"></script>
 </body>
 </html>

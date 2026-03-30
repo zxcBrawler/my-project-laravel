@@ -11,7 +11,6 @@
                     Назад к новостям
                 </a>
             </div>
-            
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h1 class="h3 mb-0">{{ $article->title }}</h1>
@@ -25,7 +24,6 @@
                                  style="max-height: 500px; width: auto;">
                         </div>
                     @endif
-                    
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="text-muted">
@@ -44,7 +42,6 @@
                             @endif
                         </div>
                     </div>
-                    
                     <div class="mb-4">
                         <h4>Краткое описание</h4>
                         <p class="lead">{{ $article->short_description }}</p>
@@ -84,7 +81,6 @@
                         <a href="{{ route('login') }}">Войдите</a>, чтобы оставить комментарий
                     </div>
                 @endauth
-                
                 <div class="comments-list">
                     @forelse($article->comments as $comment)
                         <div class="card mb-3">
