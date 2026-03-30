@@ -9,7 +9,7 @@ use App\Mail\NewArticleMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
-use App\Jobs\SendNewArticleNotificationJob;
+use App\Jobs\VeryLongJob;
 
 class ArticleAdminController extends Controller
 {
@@ -65,7 +65,7 @@ class ArticleAdminController extends Controller
         
         $article = Article::create($validated);
         
-        $this->sendNewArticleNotification($article);
+        VeryLongJob::dispatch($article);
 
         return redirect()->route('admin.articles.index')
             ->with('success', 'Новость успешно создана!');
@@ -109,20 +109,5 @@ class ArticleAdminController extends Controller
         
         return redirect()->route('admin.articles.index')
             ->with('success', 'Новость успешно удалена!');
-    }
-
-    private function sendNewArticleNotification($article)
-    {
-        $moderators = User::whereHas('role', function ($query) {
-            $query->where('slug', 'moderator');
-        })->get();
-
-        if ($moderators->isNotEmpty()) {
-            foreach ($moderators as $moderator) {
-                SendNewArticleNotificationJob::dispatch($article, $moderator->email);
-            }
-        } else {
-            SendNewArticleNotificationJob::dispatch($article, config('mail.from.address'));
-        }
     }
 }
