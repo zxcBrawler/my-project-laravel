@@ -8,6 +8,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleAdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommentAdminController;
+use App\Http\Controllers\ActivityLogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +49,11 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->name('admin.')->group(func
     Route::get('/comments', [CommentAdminController::class, 'index'])->name('comments.index');
     Route::patch('/comments/{comment}/approve', [CommentAdminController::class, 'approve'])->name('comments.approve');
     Route::delete('/comments/{comment}/reject', [CommentAdminController::class, 'reject'])->name('comments.reject');
+});
+
+Route::middleware(['auth:sanctum'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/logs', [ActivityLogController::class, 'index'])->name('logs.index');
+    Route::get('/logs/{log}', [ActivityLogController::class, 'show'])->name('logs.show');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

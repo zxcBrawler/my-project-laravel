@@ -47,6 +47,12 @@
                                                     Модерация комментариев
                                                 </a>
                                             </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('admin.logs.index') }}">
+                                                    Логи действий
+                                                </a>
+                                            </li>
                                         </ul>
                                     </li>
                             @endcan

@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div>
                 <div class="card-header">
                     <h3>Редактировать новость: {{ $article->title }}</h3>
                 </div>
